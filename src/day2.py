@@ -17,9 +17,19 @@ def main():
                 r = range(lbound, rbound + 1)
                 for i in r:
                     s = str(i)
-                    for n in range(2, len(s) + 1):
-                        uniq = seq_rep(s, n)
-                        if len(uniq) == 1:
+                    ls = len(s)
+                    for n in range(2, ls + 1):
+                        if (ls % n) != 0:
+                            continue
+
+                        w = ls // n
+                        start = w
+                        orig = s[0:w]
+                        while start < ls:
+                            if orig != s[start:start+w]:
+                                break
+                            start += w
+                        else:
                             if n == 2:
                                 invalid.add(i)
                             invalid2.add(i)
@@ -28,20 +38,6 @@ def main():
     print(sum(invalid))
     # Part 2
     print(sum(invalid2))
-
-# Divide a string into `n` constituent parts
-def seq_rep(s: str, n: int) -> set[str]:
-    if len(s) % n != 0:
-        return set()
-
-    w = len(s) // n
-    start = 0
-    res: set[str] = set()
-
-    while start < len(s):
-        res.add(s[start:start+w])
-        start += w
-    return res
 
 if __name__ == "__main__":
     main()
