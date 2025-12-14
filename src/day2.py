@@ -4,13 +4,11 @@ import sys
 def main():
     filename = sys.argv[1]
 
-    invalid = set()
-    invalid2 = set()
+    invalid = 0
+    invalid2 = 0
     with open(filename, "r") as f:
         for line in f:
-            line = line.strip()
             for bounds in line.split(','):
-
                 lbound, rbound = map(int, bounds.split('-'))
 
                 # range is exclusive of upper bound, so add 1
@@ -31,13 +29,14 @@ def main():
                             start += w
                         else:
                             if n == 2:
-                                invalid.add(i)
-                            invalid2.add(i)
+                                invalid += i
+                            invalid2 += i
+                            continue
 
     # Part 1
-    print(sum(invalid))
+    print(invalid)
     # Part 2
-    print(sum(invalid2))
+    print(invalid2)
 
 if __name__ == "__main__":
     main()
