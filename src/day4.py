@@ -18,13 +18,28 @@ def main():
 
     print("Part 1", accessible)
 
+    total_removed = 0
+    while True:
+        remove = accessible_rolls(d)
+        if len(remove) == 0:
+            break
+
+        for v in remove:
+            d[v] = '.'
+        total_removed += len(remove)
+
+    print("Part 2", total_removed)
+
 def count_accessible(d):
-    accessible = 0
+    return len(accessible_rolls(d))
+
+def accessible_rolls(d):
+    accessible = []
     for k, v in d.items():
         if v == '.':
             continue
         if is_accessible(k, d):
-            accessible += 1
+            accessible.append(k)
     return accessible
 
 def is_accessible(k, d):
