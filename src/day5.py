@@ -20,7 +20,21 @@ def main():
 
         print("Part 1", fresh_ingredients)
 
+        untouched = False
+        while not untouched:
+            untouched = True
+            fresh_ranges = sorted(
+                    (r for r in fresh_ranges if r is not None),
+                    key=lambda r: r.start
+            )
+            for i in range(len(fresh_ranges) - 1):
+                a, b = fresh_ranges[i], fresh_ranges[i+1]
+                if a.stop > b.start:
+                    fresh_ranges[i] = None
+                    fresh_ranges[i+1] = range(a.start, max(a.stop, b.stop))
+                    untouched = False
 
+        print("Part 2", sum(len(r) for r in fresh_ranges))
 
 if __name__ == "__main__":
     main()
